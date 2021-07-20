@@ -4,7 +4,7 @@
 
 ## Pasul 1
 
-Faceți fork la repository-ul de pe github: https://github.com/dezGusty/cpp-playground
+Faceți fork la repository-ul de pe github: https://github.com/4o4error/cpp-playground/
 
 ## Pasul 2
 
