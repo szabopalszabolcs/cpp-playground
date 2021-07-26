@@ -1,7 +1,8 @@
 #include <stdio.h>
-
 #include <iostream>
 #include <string>
+
+using namespace std;
 
 void printOddOrEven(int number)
 {
@@ -34,24 +35,37 @@ int main(int argc, char *argv[])
 	if (argc <= 1)
 	{
 		printf("No program arguments found.\n");
+		getchar();
+		return 0;
 	}
 	
-	// TODO(Gusti): i don't know why this doesn't work, but someone please FIX it.
-	// --------------- start
-
 	// Get the first argument
-	std::string argumentAsString = argv[1];
-	const char* argumentAsCharArray = argumentAsString.c_str();
+	string argumentAsString = argv[1];
+	
+	// try to convert string to int
+	try
+	{
+		string::size_type str;
+		int argumentAsInteger = stoi(argumentAsString,&str);
+		// if conversion succeded it is checking that there is no leftover characters in the initial argument
+		if ( argumentAsString.substr(str).length() == 0) { 
+			printOddOrEven(argumentAsInteger);
+			getchar();
+			return 0;
+		}
+		else
+		{
+			printf("NAN\n");
+			getchar();
+			return 0;
+		}
+	}
+	// if the conversion isn't succesfull
+	catch (exception ex)
+	{
+		printf("NAN\n");
+		getchar();
+		return 0;
+	}
 
-	//number = argv[1]; // No
-	//should use atoi?
-	// or std::stoi?
-
-	std::cout << argumentAsString << std::endl; // i think this should be removed
-
-	// --------------- stop
-
-	printOddOrEven(number);
-
-	return 0;
 }
