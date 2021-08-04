@@ -3,20 +3,20 @@
 
 // Define the maximum length for the name to use.
 // Specify the length of characters in the content (Excluding the terminator).
-#define MAX_NAME_LEN 10
+#define MAX_NAME_LEN 25
 #define MAX_TITLE_LEN 50
+#define MAX_NR_OF_AUTHORS 10
 
 struct Author
 {
 	char name[MAX_NAME_LEN + 1];
 
-	void setName(char nameToSet[MAX_NAME_LEN])
+	void setName(char nameToSet[])
 	{
 		strncpy(name, nameToSet, MAX_NAME_LEN);
-		// overwrite the last character
 		name[MAX_NAME_LEN] = 0;
 	}
-
+	
 	void print()
 	{
 		std::cout << name << std::endl;
@@ -26,14 +26,17 @@ struct Author
 struct Book
 {
 	int id;
-	char title[50];
-
+	char title[MAX_TITLE_LEN];
 	int numAuthors;
-	Author authors[5];
+	Author authors[MAX_NR_OF_AUTHORS];
 
 	void addAuthor(Author author)
 	{
-		// TODO: add an author to the container authors array.
+		if (numAuthors >= MAX_NR_OF_AUTHORS)
+		{
+			std::cout << "You reached the maximum number of possible authors" << std::endl;
+		}
+		authors[numAuthors] = author;
 		numAuthors++;
 	}
 
@@ -42,9 +45,26 @@ struct Book
 		std::cout << "Book #" << id << std::endl;
 		std::cout << "------" << std::endl;
 		std::cout << this->title << std::endl;
-
-		// TODO: add all authors
-
+		switch (numAuthors)
+		{
+		case 0:
+			std::cout << "No Author" << std::endl;
+			break;
+		case 1:
+			std::cout << "Author" << std::endl;
+			std::cout << "------" << std::endl;
+			authors[0].print();
+			std::cout << std::endl;
+			break;
+		default:
+			std::cout << "Authors" << std::endl;
+			std::cout << "------" << std::endl;
+			for (int i = 0; i < numAuthors;i++)
+			{
+				authors[i].print();
+			}
+			std::cout << std::endl;
+		}
 	}
 };
 
@@ -63,7 +83,7 @@ int main()
 	// Load the data into books
 	book1.id = 1;
 	book1.numAuthors = 0;
-	setBookName(book1, u8"The origin of truth (nu există, nu o căutați)");
+	setBookName(book1,"The origin of truth (nu există, nu o căutați)");
 	author.setName("Gusti");
 	book1.addAuthor(author);
 
@@ -89,5 +109,20 @@ int main()
 	book1.print();
 	book2.print();
 	book3.print();
+
+	// Adding Book #4
+	Book book4;
+
+	book4.id = 4;
+	book4.numAuthors = 0;
+	setBookName(book4, "Clean Architecture: A Craftsman's Guide to Software Structure and Design");
+	author.setName("Robert C. Martin");
+	book4.addAuthor(author);
+
+	// Display the new book
+	book4.print();
+
+	getchar();
+
 	return 0;
 }
