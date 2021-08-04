@@ -1,8 +1,23 @@
 #include <iostream>
+#include <string>
+
+using namespace std;
 
 bool isArmstrongNumber(int number)
 {
-	// TODO: implement some functionality to see if this number is an armstrong number
+	int chunk = number, sum = 0;
+
+	while (chunk > 0)
+	{
+		sum += (chunk % 10) * (chunk % 10)* (chunk % 10);
+		cout << sum << endl;
+		chunk = chunk / 10;
+	}
+
+	if (sum == number)
+	{
+			return true;
+	}
 
 	return false;
 }
@@ -44,15 +59,33 @@ int main(int argc, char *argv[])
 	if (argc <= 1)
 	{
 		std::cout << "No program arguments found." << std::endl;
-		return 1;
+		return 0;
 	}
 
 	int readNumber = 0;
 	// Get the first argument
 	std::string argumentAsString = argv[1];
-	
-	// TODO: read number / cast to integer
 
-	printIsArmstrong(readNumber);
-	return 0;
+	try
+	{
+		string::size_type str;
+		int argumentAsInteger = stoi(argumentAsString, &str);
+		// if conversion succeded it is checking that there is no leftover characters in the initial argument
+		if (argumentAsString.substr(str).length() == 0) {
+			printIsArmstrong(argumentAsInteger);
+			return 0;
+		}
+		else
+		{
+			printf("NAN\n");
+			return 0;
+		}
+	}
+	// if the conversion isn't succesfull
+	catch (exception ex)
+	{
+		printf("NAN\n");
+		return 0;
+	}
+
 }
