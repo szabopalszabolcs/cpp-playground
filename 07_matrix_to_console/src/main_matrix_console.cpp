@@ -10,27 +10,50 @@ class Matrix
 private:
 	size_t column_count;
 	size_t line_count;
-
+	std::vector<std::vector<char>> data;
 	// TODO: store the data
 	// hints: you can use std::string, std::vectors + string, char**, vector<vector<char>>, etc
 public:
 	Matrix(size_t numColumnsX, size_t numLinesY)
 		// TODO: add functionality
 	{
-		// TODO: add functionality
+		column_count = numColumnsX;
+		line_count = numLinesY;
+
+		//initialising data with " " for each field
+
+		for (size_t i = 0; i < column_count; i++)
+		{
+			data.push_back(std::vector<char>());
+			for (size_t j = 0; j < line_count; j++)
+			{
+				data.at(i).push_back(' ');
+			}
+		}
 	}
 
 	// Set an entire line
-	void setLine(size_t line_number, const std::string& data)
+	void setLine(size_t line_number, const std::string& line_data)
 	{
+		if (line_number<0 || line_number>=line_count)
+		{
+			return;
+		}
+		for (size_t i = 0; i < column_count && i < line_data.length(); i++)
+		{
+			data.at(i).at(line_number) = line_data.at(i);
+		}
 	}
 
 	//OPTIONAL
-	//char getCellXY(size_t x, size_t y, char cell_content)
-	//{
-	//	// TODO: add functionality
-	//	return 0;
-	//}
+	char getCellXY(size_t x, size_t y)
+	{
+		if (x < 0 || x >= column_count || y < 0 || y >= line_count)
+		{
+			return NULL;
+		}
+		return data.at(x).at(y);
+	}
 
 	/**
 		Sets the cell content for a specific cell identified by its coordinates (X and Y)
@@ -54,13 +77,25 @@ public:
 	*/
 	void setCellXY(size_t x, size_t y, char cell_content)
 	{
-		// TODO: add functionality
+		if (x < 0 || x >= column_count || y < 0 || y >= line_count)
+		{
+			return;
+		}
+		data.at(x).at(y) = cell_content;
 	}
 
 	void print()
 	{
-		// print all lines and columns
-		// TODO: add functionality
+		std::cout << std::endl;
+		for (size_t i = 0; i < line_count; i++)
+		{
+			for (size_t j = 0; j < column_count; j++)
+			{
+				std::cout << data.at(j).at(i);
+			}
+			std::cout << std::endl;
+		}
+		std::cout << std::endl;
 	}
 };
 
@@ -127,5 +162,8 @@ X-----X----X-----XX-
 
 	// This should silently fail (not trigger an error): cell Y=11 invalid due to limited height.
 	matrix.setCellXY(3, 11, 'O');
+	
+	getchar();
+	
 	return 0;
 }
