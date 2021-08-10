@@ -145,7 +145,6 @@ Matrix play(Matrix matrix)
 
 int menuSelect(std::vector<std::string> menuString)
 {
-	std::string in;
 	int key;
 	bool ok = false;
 	int size = menuString.size();
@@ -159,7 +158,7 @@ int menuSelect(std::vector<std::string> menuString)
 			std::cout << i + 1 << ". " << menuString[i].c_str() << std::endl;
 		}
 		std::cin >> key;
-		if (key > 0 && key <= sizeof(menuString))
+		if (key > 0 && key <= menuString.size())
 		{
 			ok = true;
 		}
